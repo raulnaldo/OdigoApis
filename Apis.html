@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app='NarrowItDownApp'>
+<html lang="en" ng-app='OdigoApisModule'>
 <head>
   <title>Bootstrap 4 Website Example</title>
   <meta charset="utf-8">
@@ -8,9 +8,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-   <script src="js/jquery-3.1.0.min.js"></script>
-   <script src="js/angular.min.js"></script>
-   <script src="js/app.js"></script>  
+
   <style>
   .fakeimg {
     height: 200px;
@@ -19,7 +17,7 @@
   </style>
 </head>
 <body>
-<div ng-controller='NarrowItDownController as list1'>
+<div ng-controller='OdigoApisController as Odio'>
 <div class="jumbotron text-center" style="margin-bottom:0">
   <h1>Odigo Apis Sample Page</h1>
   <p>Sample page to test the apis in Odigo Suite!</p> 
@@ -51,15 +49,15 @@
 
       <ul class="nav nav-pills flex-column">
         <li class="nav-item">
-          <a class="btn btn-primary" ng-click="list1.getTokenFromApi(searchTerm);" >Get Token Key</a>
+          <a class="btn btn-primary" ng-click="Odio.getTokenFromApi();" >Get Token Key</a>
         </li>
         <p>
         <li class="nav-item">
-          <a class="btn btn-primary" href="#">Answer</a>
+          <a class="btn btn-primary" ng-click="Odio.OdigoAnswer(Odio.Token);">Answer</a>
         </li>
         <p>
         <li class="nav-item">
-          <a class="btn btn-primary" href="#">HangUp</a>
+          <a class="btn btn-primary" ng-click="Odio.OdigoHangUp(Odio.Token);">HangUp</a>
         </li>
         <p>
         <li class="nav-item">
@@ -90,13 +88,17 @@
       <hr class="d-sm-none">
     </div>
     <div class="col-sm-4">
-      <h2>TOKEN KEY OBTAINED</h2>
-      <h5>Esta el la api key</h5>
+      <h2>ODIGO API SETUP</h2>
+      <h5>Application config Data</h5>
       <div class="form-group">
-        <label for="Token">ApiKey:</label>
-        <input type="text" class="form-control" id="IdToken" ng-model="list1.Token">
-        <label for="Token">Agent:</label>
-        <input type="text" class="form-control" id="IdToken" ng-model="list1.Token">        
+        <label for="userUid">UserAuth:</label>
+        <input type="text" class="form-control" id="IdToken" ng-model="Odio.userUid">
+        <label for="appUid">ApiKey:</label>
+        <input type="text" class="form-control" id="IdToken" ng-model="Odio.appUid">                
+        <label for="Token">Token:</label>
+        <input type="text" class="form-control" id="IdToken" ng-model="Odio.Token">
+        <label for="Status">Operation Satus:</label>
+        <input type="text" class="form-control" id="IdToken" ng-model="Odio.OpStatus">        
       </div>      
 
       <br>
@@ -108,4 +110,22 @@
   <p>Footer</p>
 </div>
 
+    <!-- Libs -->
+    
+    <script src="../lib/jquery-2.1.4.min.js"></script>
+    <script src="../lib/angular.min.js"></script>    
+    <script src="../lib/bootstrap.min.js"></script>    
+    <script src="../lib/angular-ui-router.min.js"></script>
+
+    <!--OdigoApis Module -->
+    <script src="../src/OdigoApis.module.js"></script>
+    <script src="../src/loading/loading.component.js"></script>
+    <script src="../src/loading/loading.interceptor.js"></script>    
+
+    <!--OdigoApis Controller -->
+    <script src="../src/OdigoApis.controller.js"></script>
+
+    <!--OdigoApis Service -->
+    <script src="../src/OdigoApis.Service.js"></script>
 </body>
+</html>

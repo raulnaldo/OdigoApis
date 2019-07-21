@@ -27,7 +27,7 @@ xhr.onload  = function (aEvt) {
 xhr.open("POST", "https://paas-de01.prosodie.com:443/auth/v2/routing_de01/direct-access-claim-sets",true);
 xhr.setRequestHeader("Content-Type", "application/json");
 xhr.setRequestHeader("Authorization", "Basic Y29uc29sZV9kZTAxQHByb3NvZGllLmNvbTpBWkVSVFk=");
-xhr.setRequestHeader("Accept", "*/*");
+xhr.setRequestHeader("Access-Control-Allow-Origin", "*/*");
 //xhr.setRequestHeader("Origin", 'https://paas-de01.prosodie.com:443');
 
 xhr.send(data);
