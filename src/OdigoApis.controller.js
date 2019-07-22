@@ -100,13 +100,14 @@ function OdigoApisController($location,OdigoApisService,userUid,appUid) {
   OdigoApisCtrl.OdigoEndWrapUp = function(Token,Agent){
     OdigoApisCtrl.OpStatus='';
     OdigoApisCtrl.CallReasonCreate={};
-    OdigoApisCtrl.CallReasonCreate.CallRef=OdigoApisCtrl.OdigoCallInfo.CallRef;
-    OdigoApisCtrl.CallReasonCreate.GateId=OdigoApisCtrl.OdigoCallInfo.GateId;
+    OdigoApisCtrl.CallReasonCreate.agentId=OdigoApisCtrl.userUid;
+    OdigoApisCtrl.CallReasonCreate.callId=OdigoApisCtrl.OdigoCallInfo.CallRef;
+    OdigoApisCtrl.CallReasonCreate.gateId='GT Demo 176';
     OdigoApisCtrl.CallReasonCreate.keyboardDuration=0;
-    OdigoApisCtrl.CallReasonCreate.reason={};
-    OdigoApisCtrl.CallReasonCreate.reason.key='Folder';
-    OdigoApisCtrl.CallReasonCreate.reason.value='Valor De Reason';
-    OdigoApisCtrl.CallReasonCreate.reasons=[OdigoApisCtrl.CallReasonCreate.reason];
+    var reason={};
+    reason.key='Folder';
+    reason.value='Valor De Reason';
+    OdigoApisCtrl.CallReasonCreate.reasons=[reason];
     OdigoApisCtrl.CallReasonCreate.storing=true;
     OdigoApisCtrl.CallReasonCreate.wrapUpEnd=true;
     
