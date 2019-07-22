@@ -16,6 +16,7 @@ function OdigoApisController($location,OdigoApisService,userUid,appUid) {
   console.log('--> $location.search():',$location.search());
   console.log('--> OdigoApisCtrl.OdigoCallInfo():',OdigoApisCtrl.OdigoCallInfo);
 
+  OdigoApisCtrl.OdigoCallInfo.GateId='GT Demo 176';
 
   OdigoApisCtrl.buttonSearchText='Get The Token Key!';
   OdigoApisCtrl.Token='';
@@ -83,9 +84,9 @@ function OdigoApisController($location,OdigoApisService,userUid,appUid) {
 //ODIGO API COMANDS
 
   //HANGUP  
-  OdigoApisCtrl.OdigoHangUp = function(Token){
+  OdigoApisCtrl.OdigoHangUp = function(Token,Agent){
     OdigoApisCtrl.OpStatus='';
-      var promise= OdigoApisService.OdigoHangUp(Token);
+      var promise= OdigoApisService.OdigoHangUp(Token,Agent);
       promise.then(function (response) {
           OdigoApisCtrl.OpStatus='200';
           console.log('Then:',response.data);          
@@ -102,7 +103,7 @@ function OdigoApisController($location,OdigoApisService,userUid,appUid) {
     OdigoApisCtrl.CallReasonCreate={};
     OdigoApisCtrl.CallReasonCreate.agentId=OdigoApisCtrl.userUid;
     OdigoApisCtrl.CallReasonCreate.callId=OdigoApisCtrl.OdigoCallInfo.CallRef;
-    OdigoApisCtrl.CallReasonCreate.gateId='GT Demo 176';
+    OdigoApisCtrl.CallReasonCreate.gateId=OdigoApisCtrl.OdigoCallInfo.GateId;
     OdigoApisCtrl.CallReasonCreate.keyboardDuration=0;
     var reason={};
     reason.key='Folder';

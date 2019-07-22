@@ -77,7 +77,6 @@ function OdigoApisService($http, ApiPath,ApiAuthPath,userUid,appUid) {
       method: "POST",
       headers: {
          'Content-Type': 'application/json',
-         'Authorization': 'Basic Y29uc29sZV9kZTAxQHByb3NvZGllLmNvbTpBWkVSVFk=',
          'X-API-TOKEN' : Token,
          'X-WS-INSTANCE' : 'de01'
        },       
