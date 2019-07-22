@@ -13,6 +13,7 @@ function OdigoApisController($location,OdigoApisService,userUid,appUid) {
   var OdigoApisCtrl = this;
   OdigoApisCtrl.OdigoCallInfo=$location.search();
 
+  console.log('--> $location.search():',$location.search());
   console.log('--> OdigoApisCtrl.OdigoCallInfo():',OdigoApisCtrl.OdigoCallInfo);
 
   OdigoApisCtrl.buttonSearchText='Get The Token Key!';
