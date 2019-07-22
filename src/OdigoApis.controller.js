@@ -16,6 +16,7 @@ function OdigoApisController($location,OdigoApisService,userUid,appUid) {
   console.log('--> $location.search():',$location.search());
   console.log('--> OdigoApisCtrl.OdigoCallInfo():',OdigoApisCtrl.OdigoCallInfo);
 
+
   OdigoApisCtrl.buttonSearchText='Get The Token Key!';
   OdigoApisCtrl.Token='';
   OdigoApisCtrl.userUid=userUid;
@@ -99,18 +100,18 @@ function OdigoApisController($location,OdigoApisService,userUid,appUid) {
   OdigoApisCtrl.OdigoEndWrapUp = function(Token,Agent){
     OdigoApisCtrl.OpStatus='';
     OdigoApisCtrl.CallReasonCreate={};
-    OdigoApisCtrl.CallReasonCreate.callId='';
-    OdigoApisCtrl.CallReasonCreate.gateId='';
+    OdigoApisCtrl.CallReasonCreate.callId=OdigoApisCtrl.OdigoCallInfo.CallRef;
+    OdigoApisCtrl.CallReasonCreate.gateId=OdigoApisCtrl.OdigoCallInfo.GateId;
     OdigoApisCtrl.CallReasonCreate.keyboardDuration=0;
     OdigoApisCtrl.CallReasonCreate.reason={};
     OdigoApisCtrl.CallReasonCreate.reason.key='Folder';
     OdigoApisCtrl.CallReasonCreate.reason.value='Valor De Reason';
     OdigoApisCtrl.CallReasonCreate.reasons=[OdigoApisCtrl.CallReasonCreate.reason];
     OdigoApisCtrl.CallReasonCreate.storing=true;
-    OdigoApisCtrl.CallReasonCreate.wrapUpEnd=true;    
+    OdigoApisCtrl.CallReasonCreate.wrapUpEnd=true;
     
 
-      var promise= OdigoApisService.OdigoEndWrapUp(Token,Agent,OdigoApisCtrl.CallReasonCreate.reasons);
+      var promise= OdigoApisService.OdigoEndWrapUp(Token,Agent,OdigoApisCtrl.CallReasonCreate);
       promise.then(function (response) {
           OdigoApisCtrl.OpStatus='200';
           console.log('Then:',response.data);          
@@ -129,7 +130,7 @@ function OdigoApisController($location,OdigoApisService,userUid,appUid) {
 
 
 
-
+   OdigoApisCtrl.getTokenFromApi();  
 
 }
 
