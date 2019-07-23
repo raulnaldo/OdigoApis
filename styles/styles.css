@@ -64,3 +64,13 @@ margin-left: 5px;
 .error{
   display: none;
 }
+
+.btn-toolbar{
+  margin-left: 10px;
+  margin-right: 10px;
+  background-color: #6e7e90;
+}
+
+.odigoPinkSoda{
+  background-color: #d61d4a!important;
+}

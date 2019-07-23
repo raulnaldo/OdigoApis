@@ -142,7 +142,7 @@ OdigoApisCtrl.OdigoLoadVideo = function(pVideoRoom){
 
 
 
-   OdigoApisCtrl.getTokenFromApi();  
+OdigoApisCtrl.getTokenFromApi();  
 
 }
 
