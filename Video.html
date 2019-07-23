@@ -16,26 +16,19 @@
 <div ng-controller='OdigoApisController as Odigo'>
 <nav class="navbar navbar-expand-sm">
   <img src="images/Odigo.png" width="100" height=100%>  
-</nav>  
-<nav class="navbar navbar-expand-sm navbar-dark odigoPinkSoda">  
-  <a class="navbar-brand" href="#">User Loged Info</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
   <div class="collapse navbar-collapse" id="collapsibleNavbar">
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" href="#">Login: {{ Odigo.userInfo.login }} </a>
+        <a class="nav-link nav-info" href="#">Login: {{ Odigo.userInfo.login }} </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Full Name: {{ Odigo.userInfo.firstName }} {{ Odigo.userInfo.lastName }} </a>
+        <a class="nav-link nav-info" href="#">Full Name: {{ Odigo.userInfo.firstName }} {{ Odigo.userInfo.lastName }} </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Ddi: {{ Odigo.userInfo.ddi }} </a>
+        <a class="nav-link nav-info" href="#">Ddi: {{ Odigo.userInfo.ddi }} </a>
       </li>      
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Skills</a>
+        <a class="nav-link dropdown-toggle nav-info" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Skills</a>
         <div class="dropdown-menu">
           <a class="dropdown-item" href="#">{{ Odigo.userActiveSettings.availableSkills[0].label }}</a>
           <a class="dropdown-item" href="#">{{ Odigo.userActiveSettings.availableSkills[1].label }}</a>
@@ -52,17 +45,19 @@
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Phone: {{ Odigo.OdigoCallInfo.CallPhone }} </a>
+        <a class="nav-link nav-info" href="#">Phone: {{ Odigo.OdigoCallInfo.CallPhone }} </a>
       </li>            
       <li class="nav-item">
-        <a class="nav-link" href="#">Ref: {{ Odigo.OdigoCallInfo.CallRef }} </a>
+        <a class="nav-link nav-info" href="#">Ref: {{ Odigo.OdigoCallInfo.CallRef }} </a>
       </li> 
       <li class="nav-item">
-        <a class="nav-link" href="#">GateId: {{ Odigo.OdigoCallInfo.GateId }} </a>
+        <a class="nav-link nav-info" href="#">GateId: {{ Odigo.OdigoCallInfo.GateId }} </a>
       </li>                              
     </ul>
-  </div>  
-</nav>
+  </div> 
+
+
+</nav>  
 
 <nav class="navbar navbar-expand-sm navbar-dark odigoPinkSoda">
   <a class="navbar-brand" href="#">Call Control</a>
@@ -102,11 +97,9 @@
         <label for="RoomId">IdSesionVideo:</label>        
         <br>        
         <input type="text" class="form-control" id="IdToken" ng-model="Odigo.videoSession">
-        <br>
-        <br>
         <a class="btn btn-primary" ng-click="Odigo.OdigoLoadVideo(Odigo.videoSession);">Adjuntar Video</a>
         <br>                
-        <iframe ng-src=" {{ currentProjectUrl }} " allow="geolocation; microphone; camera" width=640 height=480></iframe>
+        <iframe class="OdigoIframe" ng-src=" {{ currentProjectUrl }} " allow="geolocation; microphone; camera" width=640 height=480></iframe>
       </div>      
       <br>
     </div>
@@ -117,8 +110,10 @@
       <div class="form-group">
         <label for="userUid">UserAuth:</label>
         <input type="text" class="form-control" id="IdToken" ng-model="Odigo.userUid">
+        <br>
         <label for="appUid">ApiKey:</label>
-        <input type="text" class="form-control" id="IdToken" ng-model="Odigo.appUid">                
+        <input type="text" class="form-control" id="IdToken" ng-model="Odigo.appUid">
+        <br>                
         <label for="Token">Token:</label>
         <input type="text" class="form-control" id="IdToken" ng-model="Odigo.Token">
         <label for="Status">Operation Satus:</label>
