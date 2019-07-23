@@ -5,10 +5,10 @@
 angular.module('OdigoApisModule')
 .controller('OdigoApisController', OdigoApisController);
 
-OdigoApisController.$inject = ['$location','OdigoApisService','userUid','appUid'];
-function OdigoApisController($location,OdigoApisService,userUid,appUid) {  
+OdigoApisController.$inject = ['$location','OdigoApisService','userUid','appUid','$scope','$sce'];
+function OdigoApisController($location,OdigoApisService,userUid,appUid,$scope, $sce) {  
 
-  console.log('--> OdigoApisController Init()');
+  console.log('--> OdigoApisController Init()'); 
 
   var OdigoApisCtrl = this;
   OdigoApisCtrl.OdigoCallInfo=$location.search();
@@ -129,6 +129,16 @@ function OdigoApisController($location,OdigoApisService,userUid,appUid) {
     alert(Token);
     OdigoApisCtrl.OpStatus='';
   };
+
+
+//ATTACH TO VIDEO
+
+OdigoApisCtrl.OdigoLoadVideo = function(pVideoRoom){    
+    console.log(pVideoRoom);
+    //OdigoApisCtrl.videSessionUrl='https://webrtc.demo.ivrpowers.com/webclient?theme=odigo&autocall=false&callerid='+pVideoRoom;
+    $scope.currentProjectUrl = $sce.trustAsResourceUrl('https://webrtc.demo.ivrpowers.com/split_agent_popup?theme=odigo&room='+pVideoRoom);    
+    console.log(OdigoApisCtrl.videSessionUrl);
+};
 
 
 

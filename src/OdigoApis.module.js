@@ -7,11 +7,15 @@ angular.module('OdigoApisModule', [])
 .constant('userUid', 'agent176ddi@demo.com')
 .constant('appUid', 'fxBYAMsu7Ja9OM3ezAhLAvLPLRsa')
 
+
 .config(config);
 
 config.$inject = ['$httpProvider'];
 function config($httpProvider) {
   $httpProvider.interceptors.push('loadingHttpInterceptor');
 }
+
+
+
 
 })();
