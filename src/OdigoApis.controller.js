@@ -124,7 +124,7 @@ function OdigoApisController($location,OdigoApisService,userUid,appUid,$scope, $
       });                
   };
 
-    //END WRAPUP
+    //CALL CODIFICATIONS
   OdigoApisCtrl.OdigovalidateCallCodifications = function(Token,Agent){
     OdigoApisCtrl.OpStatus='';
     OdigoApisCtrl.CallCodification={};
@@ -136,7 +136,11 @@ function OdigoApisController($location,OdigoApisService,userUid,appUid,$scope, $
     field.label='Folder';
     field.order=1;
     field.value='123456';
-    OdigoApisCtrl.CallCodification.fields=[field];
+    OdigoApisCtrl.CallCodification.fields=[ {
+"label" : "Console - line 1",
+"value" : "Folder 145231",
+"order" : 1
+} ];
     OdigoApisCtrl.CallCodification.gateKeyWord='';
     OdigoApisCtrl.CallCodification.isStoringRecord=true;
     
@@ -144,7 +148,10 @@ function OdigoApisController($location,OdigoApisService,userUid,appUid,$scope, $
     reason.id=1;
     reason.label='Valor De Reason';
 
-    OdigoApisCtrl.CallCodification.reasons=[reason];
+    OdigoApisCtrl.CallCodification.reasons=[ {
+"id" : 13,
+"label" : "Callback//Node1//Node2//Reason1"
+} ];
 
     var promise= OdigoApisService.OdigovalidateCallCodifications(Token,Agent,OdigoApisCtrl.CallCodification);
     promise.then(function (response) {

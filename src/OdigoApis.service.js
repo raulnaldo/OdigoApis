@@ -200,7 +200,7 @@ function OdigoApisService($http, ApiPath,ApiAuthPath,userUid,appUid) {
     return response;
   };
 
-//END WRAPUP
+//VALIDATE CODIFICATIONS
 //*****************************
   service.OdigovalidateCallCodifications = function (Token,Agent,CallCodification) {
     console.log('--> OdigovalidateCallCodifications()',CallCodification);
