@@ -137,8 +137,8 @@ function OdigoApisController($location,OdigoApisService,userUid,appUid,$scope, $
     field.order=1;
     field.value='123456';
     OdigoApisCtrl.CallCodification.fields=[ {
-"label" : "Console - line 1",
-"value" : "Folder 145231",
+"label" : "Expediente",
+"value" : "Folder 52864896v",
 "order" : 1
 } ];
     OdigoApisCtrl.CallCodification.gateKeyWord='';
@@ -150,8 +150,8 @@ function OdigoApisController($location,OdigoApisService,userUid,appUid,$scope, $
 
     OdigoApisCtrl.CallCodification.reasons=[ {
 "id" : 13,
-"label" : "Callback//Node1//Node2//Reason1"
-} ];
+"label" : "SANTANDER_OUTCOME_REASON//NOT_INTERESED//OtherBank"
+}];
 
     var promise= OdigoApisService.OdigovalidateCallCodifications(Token,Agent,OdigoApisCtrl.CallCodification);
     promise.then(function (response) {
