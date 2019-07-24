@@ -124,6 +124,40 @@ function OdigoApisController($location,OdigoApisService,userUid,appUid,$scope, $
       });                
   };
 
+    //END WRAPUP
+  OdigoApisCtrl.OdigovalidateCallCodifications = function(Token,Agent){
+    OdigoApisCtrl.OpStatus='';
+    OdigoApisCtrl.CallCodification={};
+
+    OdigoApisCtrl.CallCodification.callBackId='';
+    OdigoApisCtrl.CallCodification.callId=OdigoApisCtrl.OdigoCallInfo.CallRef;
+    OdigoApisCtrl.CallCodification.campaignId='';
+    var field={};
+    field.label='Folder';
+    field.order=1;
+    field.value='123456';
+    OdigoApisCtrl.CallCodification.fields=[field];
+    OdigoApisCtrl.CallCodification.gateKeyWord='';
+    OdigoApisCtrl.CallCodification.isStoringRecord=true;
+    
+    var reason={};
+    reason.id=1;
+    reason.label='Valor De Reason';
+
+    OdigoApisCtrl.CallCodification.reasons=[reason];
+
+    var promise= OdigoApisService.OdigovalidateCallCodifications(Token,Agent,OdigoApisCtrl.CallCodification);
+    promise.then(function (response) {
+        OdigoApisCtrl.OpStatus='200';
+        console.log('Then:',response.data);          
+      })
+      .catch(function (error) {
+        console.log("Error:",error.status);
+        OdigoApisCtrl.OpStatus=error.status;
+    });                
+  };
+
+
   //ANSWER
   OdigoApisCtrl.OdigoAnswer = function(Token){
     alert(Token);

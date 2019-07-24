@@ -83,7 +83,10 @@
         </li>
         <li class="nav-item">
           <a class="btn btn-primary btn-toolbar" ng-click="Odigo.OdigoEndWrapUp(Odigo.Token,Odigo.userUid);">EndWrapUp</a>
-        </li>         
+        </li>
+        <li class="nav-item">
+          <a class="btn btn-primary btn-toolbar" ng-click="Odigo.OdigovalidateCallCodifications(Odigo.Token,Odigo.userUid);">CallCodifications</a>
+        </li>
     </ul>
   </div>  
 </nav>
@@ -99,7 +102,7 @@
         <input type="text" class="form-control" id="IdToken" ng-model="Odigo.videoSession">
         <a class="btn btn-primary" ng-click="Odigo.OdigoLoadVideo(Odigo.videoSession);">Adjuntar Video</a>
         <br>                
-        <iframe class="OdigoIframe" ng-src=" {{ currentProjectUrl }} " allow="geolocation; microphone; camera" width=640 height=480></iframe>
+        <iframe class="OdigoIframe" ng-src=" {{ currentProjectUrl }} " allow="microphone; camera" width=640 height=480></iframe>
       </div>      
       <br>
     </div>

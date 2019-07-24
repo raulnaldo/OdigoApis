@@ -200,6 +200,25 @@ function OdigoApisService($http, ApiPath,ApiAuthPath,userUid,appUid) {
     return response;
   };
 
+//END WRAPUP
+//*****************************
+  service.OdigovalidateCallCodifications = function (Token,Agent,CallCodification) {
+    console.log('--> OdigovalidateCallCodifications()',CallCodification);
+    var response = $http({
+      method: "POST",
+      headers: {
+         'Content-Type': 'application/json',
+         'Authorization': 'Basic Y29uc29sZV9kZTAxQHByb3NvZGllLmNvbTpBWkVSVFk=',
+         'X-API-TOKEN' : Token,
+         'X-WS-INSTANCE' : 'de01'
+       },       
+      url: (ApiPath + Agent.replace('@', '%40') + '/commands/validateCallCodifications'),
+      data: CallCodification
+    });
+    console.log('<-- OdigovalidateCallCodifications()');
+    return response;
+  };
+
 
 //CONFERENCE
 //*****************************
