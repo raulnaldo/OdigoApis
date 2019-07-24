@@ -150,20 +150,14 @@ function OdigoApisController($location,OdigoApisService,userUid,appUid,$scope, $
         ];
     OdigoApisCtrl.CallCodification.gateKeyWord='gt_demo_176';
     OdigoApisCtrl.CallCodification.isStoringRecord=true;
-    
-    var reason={};
-    reason.id=1;
-    reason.label='Valor De Reason';
-    //OdigoApisCtrl.CallCodification.reasons='';
 
-/*
     OdigoApisCtrl.CallCodification.reasons=[ 
       {
-        "id" : 13,
+        "id" : 455,
         "label" : "SANTANDER_OUTCOME_REASON//NOT_INTERESED//OtherBank"
       }
     ];
-*/    
+
     var promise= OdigoApisService.OdigovalidateCallCodifications(Token,Agent,OdigoApisCtrl.CallCodification);
     promise.then(function (response) {
         OdigoApisCtrl.OpStatus='200';
