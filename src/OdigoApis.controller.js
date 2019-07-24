@@ -138,12 +138,12 @@ function OdigoApisController($location,OdigoApisService,userUid,appUid,$scope, $
     field.value='123456';
     OdigoApisCtrl.CallCodification.fields=[ 
         {
-        "label" : "Expediente",
-        "value" : "Folder 52864896v",
+        "label" : "CallRef",
+        "value" : OdigoApisCtrl.OdigoCallInfo.CallRef,
         "order" : 1
         },
         {
-        "label" : "Comments",
+        "label" : "Free data capture (256 ch)",
         "value" : "Estos son los comentarios",
         "order" : 2
         }
