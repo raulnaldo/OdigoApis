@@ -136,22 +136,31 @@ function OdigoApisController($location,OdigoApisService,userUid,appUid,$scope, $
     field.label='Folder';
     field.order=1;
     field.value='123456';
-    OdigoApisCtrl.CallCodification.fields=[ {
-"label" : "Expediente",
-"value" : "Folder 52864896v",
-"order" : 1
-} ];
-    OdigoApisCtrl.CallCodification.gateKeyWord='';
+    OdigoApisCtrl.CallCodification.fields=[ 
+        {
+        "label" : "Expediente",
+        "value" : "Folder 52864896v",
+        "order" : 1
+        },
+        {
+        "label" : "Comments",
+        "value" : "Estos son los comentarios",
+        "order" : 2
+        }
+        ];
+    OdigoApisCtrl.CallCodification.gateKeyWord='gt_demo_176';
     OdigoApisCtrl.CallCodification.isStoringRecord=true;
     
     var reason={};
     reason.id=1;
     reason.label='Valor De Reason';
 
-    OdigoApisCtrl.CallCodification.reasons=[ {
-"id" : 13,
-"label" : "SANTANDER_OUTCOME_REASON//NOT_INTERESED//OtherBank"
-}];
+    OdigoApisCtrl.CallCodification.reasons=[ 
+    {
+      "id" : 13,
+      "label" : "SANTANDER_OUTCOME_REASON//NOT_INTERESED//OtherBank"
+    }
+    ];
 
     var promise= OdigoApisService.OdigovalidateCallCodifications(Token,Agent,OdigoApisCtrl.CallCodification);
     promise.then(function (response) {
