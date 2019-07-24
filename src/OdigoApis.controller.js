@@ -143,7 +143,7 @@ function OdigoApisController($location,OdigoApisService,userUid,appUid,$scope, $
         "order" : 1
         },
         {
-        "label" : "Free data capture (256 ch)",
+        "label" : "CallComments",
         "value" : "Estos son los comentarios",
         "order" : 2
         }
@@ -154,7 +154,7 @@ function OdigoApisController($location,OdigoApisService,userUid,appUid,$scope, $
     var reason={};
     reason.id=1;
     reason.label='Valor De Reason';
-    OdigoApisCtrl.CallCodification.reasons='';
+    //OdigoApisCtrl.CallCodification.reasons='';
 
 /*
     OdigoApisCtrl.CallCodification.reasons=[ 
@@ -164,7 +164,6 @@ function OdigoApisController($location,OdigoApisService,userUid,appUid,$scope, $
       }
     ];
 */    
-
     var promise= OdigoApisService.OdigovalidateCallCodifications(Token,Agent,OdigoApisCtrl.CallCodification);
     promise.then(function (response) {
         OdigoApisCtrl.OpStatus='200';
@@ -175,6 +174,21 @@ function OdigoApisController($location,OdigoApisService,userUid,appUid,$scope, $
         OdigoApisCtrl.OpStatus=error.status;
     });                
   };
+
+
+  //HANGUP  
+  OdigoApisCtrl.OdigoGetGateCodificationSettings = function(Token,Agent){
+    OdigoApisCtrl.OpStatus='';
+      var promise= OdigoApisService.OdigoGetGateCodificationSettings(Token,Agent);
+      promise.then(function (response) {
+          OdigoApisCtrl.OpStatus='200';
+          console.log('Then:',response.data);          
+        })
+        .catch(function (error) {
+          console.log("Error:",error.status);
+          OdigoApisCtrl.OpStatus=error.status;
+      });                
+  };  
 
 
   //ANSWER

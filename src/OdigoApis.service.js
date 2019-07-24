@@ -219,6 +219,23 @@ function OdigoApisService($http, ApiPath,ApiAuthPath,userUid,appUid) {
     return response;
   };
 
+//GATES CODIFICATION SETTINGS
+//*****************************
+  service.OdigoGetGateCodificationSettings = function (Token,Agent) {
+    console.log('--> OdigoGetGateCodificationSettings()');
+    var response = $http({
+      method: "POST",
+      headers: {
+         'Content-Type': 'application/json',
+         'Authorization': 'Basic Y29uc29sZV9kZTAxQHByb3NvZGllLmNvbTpBWkVSVFk=',
+         'X-API-TOKEN' : Token,
+         'X-WS-INSTANCE' : 'de01'
+       },       
+      url: (ApiPath + Agent.replace('@', '%40') + '/gates-codifications-settings')      
+    });
+    console.log('<-- OdigoGetGateCodificationSettings()');
+    return response;
+  };
 
 //CONFERENCE
 //*****************************
