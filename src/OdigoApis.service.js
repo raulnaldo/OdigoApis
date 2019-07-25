@@ -5,8 +5,8 @@ angular.module('OdigoApisModule')
 .service('OdigoApisService', OdigoApisService);
 
 
-OdigoApisService.$inject = ['$http', 'ApiPath','ApiAuthPath','userUid','appUid'];
-function OdigoApisService($http, ApiPath,ApiAuthPath,userUid,appUid) {
+OdigoApisService.$inject = ['$http', 'ApiPath','ApiAuthPath','CI360ApiPath','userUid','appUid'];
+function OdigoApisService($http, ApiPath,ApiAuthPath,CI360ApiPath,userUid,appUid) {
   var service = this;
 
 
@@ -219,12 +219,31 @@ function OdigoApisService($http, ApiPath,ApiAuthPath,userUid,appUid) {
     return response;
   };
 
+  //REASONS OF CONVERSATIONS
+//*****************************
+  service.ReasonsOfConversation = function (Token,Agent,Service,ReasonsOfConversation) {
+    console.log('--> ReasonsOfConversation()',Service,ReasonsOfConversation);
+    var response = $http({
+      method: "POST",
+      headers: {
+         'Content-Type': 'application/json',
+         'Authorization': 'Basic Y29uc29sZV9kZTAxQHByb3NvZGllLmNvbTpBWkVSVFk=',
+         'X-API-TOKEN' : Token,
+         'X-WS-INSTANCE' : 'de01'
+       },       
+      url: (CI360ApiPath + '/ci360/v3/'+Service+'/voice-interactions/'+ReasonsOfConversation.sessionReference+'/reasonsOfConversation'),
+      data: ReasonsOfConversation
+    });
+    console.log('<-- ReasonsOfConversation()');
+    return response;
+  };
+
 //GATES CODIFICATION SETTINGS
 //*****************************
   service.OdigoGetGateCodificationSettings = function (Token,Agent) {
     console.log('--> OdigoGetGateCodificationSettings()');
     var response = $http({
-      method: "POST",
+      method: "GET",
       headers: {
          'Content-Type': 'application/json',
          'Authorization': 'Basic Y29uc29sZV9kZTAxQHByb3NvZGllLmNvbTpBWkVSVFk=',
@@ -236,6 +255,27 @@ function OdigoApisService($http, ApiPath,ApiAuthPath,userUid,appUid) {
     console.log('<-- OdigoGetGateCodificationSettings()');
     return response;
   };
+
+//GATES CODIFICATIONS 
+//*****************************
+  service.OdigoGetGateCodifications = function (Token,Agent,Gate) {
+    console.log('--> OdigoGetGateCodifications()');
+    var response = $http({
+      method: "GET",
+      headers: {
+         'Content-Type': 'application/json',
+         'Authorization': 'Basic Y29uc29sZV9kZTAxQHByb3NvZGllLmNvbTpBWkVSVFk=',
+         'X-API-TOKEN' : Token,
+         'X-WS-INSTANCE' : 'de01'
+       },       
+      url: (ApiPath + Agent.replace('@', '%40') + '/gates-codifications/'+Gate)      
+    });
+    console.log('<-- OdigoGetGateCodifications()');
+    return response;
+  };
+
+
+
 
 //CONFERENCE
 //*****************************

@@ -5,8 +5,8 @@
 angular.module('OdigoApisModule')
 .controller('OdigoApisController', OdigoApisController);
 
-OdigoApisController.$inject = ['$location','OdigoApisService','userUid','appUid','$scope','$sce'];
-function OdigoApisController($location,OdigoApisService,userUid,appUid,$scope, $sce) {  
+OdigoApisController.$inject = ['$location','OdigoApisService','userUid','appUid','$scope','$sce','$window'];
+function OdigoApisController($location,OdigoApisService,userUid,appUid,$scope, $sce,$window) {  
 
   console.log('--> OdigoApisController Init()'); 
 
@@ -153,8 +153,8 @@ function OdigoApisController($location,OdigoApisService,userUid,appUid,$scope, $
 
     OdigoApisCtrl.CallCodification.reasons=[ 
       {
-        "id" : 455,
-        "label" : "SANTANDER_OUTCOME_REASON//NOT_INTERESED//OtherBank"
+        "id" : 193,
+        "label" : "OtherBank"
       }
     ];
 
@@ -169,8 +169,38 @@ function OdigoApisController($location,OdigoApisService,userUid,appUid,$scope, $
     });                
   };
 
+    //REASONS OF CONVERSATIONS
+  OdigoApisCtrl.ReasonsOfConversation = function(Token,Agent){
+    console.log('--> ReasonsOfConversation()');
+    console.log(Token,Agent);
+    OdigoApisCtrl.OpStatus='';
+    OdigoApisCtrl.ReasonsOfConversation={};
+    OdigoApisCtrl.ReasonsOfConversation.freeReasonsOfConversation=[
+      {
+        "label" : "Producto",
+        "value" : "Movil Samsung"
+      }
+    ];
+    OdigoApisCtrl.ReasonsOfConversation.reasonsOfConversation=['OtherBank'];
+    OdigoApisCtrl.ReasonsOfConversation.conversationNumber=1;    
+    OdigoApisCtrl.ReasonsOfConversation.sessionReference=OdigoApisCtrl.OdigoCallInfo.CallRef;
+    OdigoApisCtrl.ReasonsOfConversation.sessionReference='k234ljsdñljfñlsj';
 
-  //HANGUP  
+    console.log(OdigoApisCtrl.ReasonsOfConversation);
+    var promise= OdigoApisService.ReasonsOfConversation(Token,Agent,'DE01', OdigoApisCtrl.ReasonsOfConversation);
+    promise.then(function (response) {
+        OdigoApisCtrl.OpStatus='200';
+        console.log('Then:',response.data);          
+        console.log('<-- ReasonsOfConversation()');
+      })
+      .catch(function (error) {
+        console.log("Error:",error.status);
+        OdigoApisCtrl.OpStatus=error.status;
+        console.log('<-- ReasonsOfConversation()');
+    });                
+  };
+
+  //GATE CODIFICATIONS SETTINGS  
   OdigoApisCtrl.OdigoGetGateCodificationSettings = function(Token,Agent){
     OdigoApisCtrl.OpStatus='';
       var promise= OdigoApisService.OdigoGetGateCodificationSettings(Token,Agent);
@@ -185,6 +215,21 @@ function OdigoApisController($location,OdigoApisService,userUid,appUid,$scope, $
   };  
 
 
+  //GATE CODIFICATIONS
+
+  OdigoApisCtrl.OdigoGetGateCodifications = function(Token,Agent,Gate){
+    OdigoApisCtrl.OpStatus='';
+      var promise= OdigoApisService.OdigoGetGateCodifications(Token,Agent,Gate);
+      promise.then(function (response) {
+          OdigoApisCtrl.OpStatus='200';
+          console.log('Then:',response.data);          
+        })
+        .catch(function (error) {
+          console.log("Error:",error.status);
+          OdigoApisCtrl.OpStatus=error.status;
+      });                
+  };
+
   //ANSWER
   OdigoApisCtrl.OdigoAnswer = function(Token){
     alert(Token);
@@ -197,6 +242,7 @@ function OdigoApisController($location,OdigoApisService,userUid,appUid,$scope, $
 OdigoApisCtrl.OdigoLoadVideo = function(pVideoRoom){    
     console.log(pVideoRoom);
     //OdigoApisCtrl.videSessionUrl='https://webrtc.demo.ivrpowers.com/webclient?theme=odigo&autocall=false&callerid='+pVideoRoom;
+    //$window.open('https://webrtc.demo.ivrpowers.com/split_agent_popup?theme=odigo&room='+pVideoRoom);
     $scope.currentProjectUrl = $sce.trustAsResourceUrl('https://webrtc.demo.ivrpowers.com/split_agent_popup?theme=odigo&room='+pVideoRoom);    
     console.log(OdigoApisCtrl.videSessionUrl);
 };
