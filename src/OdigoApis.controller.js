@@ -184,7 +184,6 @@ function OdigoApisController($location,OdigoApisService,userUid,appUid,$scope, $
     OdigoApisCtrl.ReasonsOfConversation.reasonsOfConversation=['OtherBank'];
     OdigoApisCtrl.ReasonsOfConversation.conversationNumber=1;    
     OdigoApisCtrl.ReasonsOfConversation.sessionReference=OdigoApisCtrl.OdigoCallInfo.CallRef;
-    OdigoApisCtrl.ReasonsOfConversation.sessionReference='k234ljsdñljfñlsj';
 
     console.log(OdigoApisCtrl.ReasonsOfConversation);
     var promise= OdigoApisService.ReasonsOfConversation(Token,Agent,'DE01', OdigoApisCtrl.ReasonsOfConversation);
