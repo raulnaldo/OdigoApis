@@ -221,7 +221,7 @@ function OdigoApisService($http, ApiPath,ApiAuthPath,CI360ApiPath,userUid,appUid
 
   //REASONS OF CONVERSATIONS
 //*****************************
-  service.ReasonsOfConversation = function (Token,Agent,Service,ReasonsOfConversation) {
+  service.ReasonsOfConversation = function (Token,Agent,Service,CallId,ReasonsOfConversation) {
     console.log('--> ReasonsOfConversation()',Service,ReasonsOfConversation);
     var response = $http({
       method: "POST",
@@ -229,12 +229,30 @@ function OdigoApisService($http, ApiPath,ApiAuthPath,CI360ApiPath,userUid,appUid
          'Content-Type': 'application/json',
          'Authorization': 'Basic Y29uc29sZV9kZTAxQHByb3NvZGllLmNvbTpBWkVSVFk=',
          'X-API-TOKEN' : Token,
-         'X-WS-INSTANCE' : 'de01'
+         'X-WS-INSTANCE' : 'DE01'
        },       
-      url: (CI360ApiPath + '/ci360/v3/'+Service+'/voice-interactions/'+ReasonsOfConversation.sessionReference+'/reasonsOfConversation'),
+      url: (CI360ApiPath + '/ci360/v3/'+Service+'/voice-interactions/'+CallId+'/reasonsOfConversation'),
       data: ReasonsOfConversation
     });
     console.log('<-- ReasonsOfConversation()');
+    return response;
+  };
+
+  //GET VOICE INTERACTION
+//*****************************
+  service.GetVoiceInteraction = function (Token,Agent,Service,CallRef) {
+    console.log('--> GetVoiceInteraction()',Service);
+    var response = $http({
+      method: "GET",
+      headers: {
+         'Content-Type': 'application/json',
+         'Authorization': 'Basic Y29uc29sZV9kZTAxQHByb3NvZGllLmNvbTpBWkVSVFk=',
+         'X-API-TOKEN' : Token,
+         'X-WS-INSTANCE' : 'DE01'
+       },       
+      url: (CI360ApiPath + '/ci360/v3/'+Service+'/voice-interactions/'+ CallRef)
+    });
+    console.log('<-- GetVoiceInteraction()');
     return response;
   };
 

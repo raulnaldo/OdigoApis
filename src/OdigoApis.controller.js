@@ -178,16 +178,21 @@ function OdigoApisController($location,OdigoApisService,userUid,appUid,$scope, $
     OdigoApisCtrl.ReasonsOfConversation.freeReasonsOfConversation=[
       {
         "label" : "Producto",
-        "value" : "Movil Samsung"
-      }
+        "value" : "Movil Samsung",
+        "order":1
+      },
+      {
+        "label" : "Importe",
+        "value" : "1500",
+        "order":2
+      }      
     ];
-    OdigoApisCtrl.ReasonsOfConversation.reasonsOfConversation=['OtherBank'];
-    OdigoApisCtrl.ReasonsOfConversation.conversationNumber=1;    
-    OdigoApisCtrl.ReasonsOfConversation.sessionReference=OdigoApisCtrl.OdigoCallInfo.CallRef;
-
+    OdigoApisCtrl.ReasonsOfConversation.reasonsOfConversation=['Prueba'];
+    OdigoApisCtrl.ReasonsOfConversation.conversationNumber=OdigoApisCtrl.OdigoCallInfo.CallRef.substring(23, 24);
+    OdigoApisCtrl.ReasonsOfConversation.sessionReference=OdigoApisCtrl.OdigoCallInfo.CallRef.substring(20, 22);    
     console.log(OdigoApisCtrl.ReasonsOfConversation);
-    var promise= OdigoApisService.ReasonsOfConversation(Token,Agent,'DE01', OdigoApisCtrl.ReasonsOfConversation);
-    promise.then(function (response) {
+    var promise= OdigoApisService.ReasonsOfConversation(Token,Agent,'DE01',OdigoApisCtrl.OdigoCallInfo.CallRef.substring(0, 20),OdigoApisCtrl.ReasonsOfConversation);
+    promise.then(function (response) {          
         OdigoApisCtrl.OpStatus='200';
         console.log('Then:',response.data);          
         console.log('<-- ReasonsOfConversation()');
@@ -196,6 +201,24 @@ function OdigoApisController($location,OdigoApisService,userUid,appUid,$scope, $
         console.log("Error:",error.status);
         OdigoApisCtrl.OpStatus=error.status;
         console.log('<-- ReasonsOfConversation()');
+    });                
+  };
+
+    //GET VOICE INTERACTIONS
+  OdigoApisCtrl.GetVoiceInteraction = function(Token,Agent){
+    console.log('--> GetVoiceInteraction()');
+    console.log(Token,Agent);
+
+    var promise= OdigoApisService.GetVoiceInteraction(Token,Agent,'DE01','5d3afb13Vel1j00002fe');
+    promise.then(function (response) {
+        OdigoApisCtrl.OpStatus='200';
+        console.log('Then:',response.data);          
+        console.log('<-- GetVoiceInteraction()');
+      })
+      .catch(function (error) {
+        console.log("Error:",error.status);
+        OdigoApisCtrl.OpStatus=error.status;
+        console.log('<-- GetVoiceInteraction()');
     });                
   };
 

@@ -7,7 +7,7 @@ var data = JSON.stringify({
 });
 
 var xhr = new XMLHttpRequest();
-xhr.withCredentials = true;
+xhr.withCredentials = false;
 
 
 xhr.onload  = function (aEvt) {
@@ -22,17 +22,22 @@ xhr.onload  = function (aEvt) {
 };
 
 
-
-
 xhr.open("POST", "https://paas-de01.prosodie.com:443/auth/v2/routing_de01/direct-access-claim-sets",true);
 xhr.setRequestHeader("Content-Type", "application/json");
 xhr.setRequestHeader("Authorization", "Basic Y29uc29sZV9kZTAxQHByb3NvZGllLmNvbTpBWkVSVFk=");
-xhr.setRequestHeader("Access-Control-Allow-Origin", "*/*");
 //xhr.setRequestHeader("Origin", 'https://paas-de01.prosodie.com:443');
-
 xhr.send(data);
-
 //https://medium.com/@abderrahman.hamila/cors-is-not-your-nightmare-but-6cbc749400cf
+
+
+var MyTest  = function () {
+  console.log("Result:")
+    xhr.open("POST", "https://paas-de01.prosodie.com:443/auth/v2/routing_de01/direct-access-claim-sets",true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.setRequestHeader("Authorization", "Basic Y29uc29sZV9kZTAxQHByb3NvZGllLmNvbTpBWkVSVFk=");
+    //xhr.setRequestHeader("Origin", 'https://paas-de01.prosodie.com:443');
+    xhr.send(data);
+};
 
 </script>
 </html>

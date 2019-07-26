@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" ng-app='OdigoApisModule'>
+<head>
+  <title>Odigo Sample Api Test</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+  <style>
+  .fakeimg {
+    height: 200px;
+    background: #aaa;
+  }
+  </style>
+</head>
+<body>
+
+<script src="lib/jquery-2.1.4.min.js"></script>
+<script src="lib/angular.min.js"></script>   
+
+
+<script type="text/javascript">
+
+(function () {
+'use strict';
+
+angular.module('OdigoTestApi', [])
+.controller('OdigoTestApiController', OdigoTestApiController);
+OdigoTestApiController.$inject = ['$scope', '$filter'];
+
+function OdigoTestApiController ($scope, $filter) {
+//  $scope.myMessage = function () {
+//    return $scope.menu_items;
+//  };
+  $scope.myMessage="";
+  $scope.menu_items="";
+  $scope.separeMenuItems = function () {
+      $scope.myMessage="";
+      var totalItems=CountItemsFromString($scope.menu_items);      
+      if (totalItems == 0){
+        $scope.myMessage="Please enter data first";
+        $scope.menu_items="";
+      }
+      else{
+        if (totalItems < 4){
+          $scope.myMessage="Enjoy!";          
+        }       
+        else{
+            $scope.myMessage="Too much!";         
+        }
+      }
+  };
+
+  //function for counting items without spaces.
+  var CountItemsFromString = function(pString){
+    var myTotalItems=0;
+    var arrayOfStrings = pString.split(',');    
+    for (var i = 0; i < arrayOfStrings.length; i++) {
+      if (arrayOfStrings[i] != ""){
+        myTotalItems=myTotalItems+1;
+      }
+    }
+    return myTotalItems;
+  };
+}
+
+})();
+
+</script>
+
+
+</body>
+</html>
