@@ -26,6 +26,30 @@ function OdigoApisController($location,OdigoApisService,userUid,appUid,$scope, $
   OdigoApisCtrl.userActiveSettings={};  
   OdigoApisCtrl.OpStatus=''; 
 
+//ASIGNACION INICIAL
+
+  OdigoApisCtrl.ReasonsOfConversation={};
+  OdigoApisCtrl.ReasonsOfConversation.freeReasonsOfConversation={};
+  OdigoApisCtrl.ReasonsOfConversation.freeReasonsOfConversation=[
+      {
+        "label" : "Producto",
+        "value" : "Movil Samsung",
+        "order":1
+      },
+      {
+        "label" : "Model",
+        "value" : "Galaxy A80",
+        "order":2
+      },
+      {
+        "label" : "Importe",
+        "value" : "535",
+        "order":3
+      }            
+    ];
+
+OdigoApisCtrl.ReasonsOfConversation.reasonsOfConversation=['Texto libre'];
+  
 
 //********************************
 //ODIGO APIS METHODS
@@ -169,25 +193,16 @@ function OdigoApisController($location,OdigoApisService,userUid,appUid,$scope, $
     });                
   };
 
-    //REASONS OF CONVERSATIONS
-  OdigoApisCtrl.ReasonsOfConversation = function(Token,Agent){
-    console.log('--> ReasonsOfConversation()');
+/////////////////////////////////////////////////////
+//           REASONS OF CONVERSATIONS             ///
+/////////////////////////////////////////////////////    
+  OdigoApisCtrl.SetReasonsOfConversation = function(Token,Agent){
+    console.log('--> SetReasonsOfConversation()');
     console.log(Token,Agent);
+    console.log(OdigoApisCtrl);
     OdigoApisCtrl.OpStatus='';
-    OdigoApisCtrl.ReasonsOfConversation={};
-    OdigoApisCtrl.ReasonsOfConversation.freeReasonsOfConversation=[
-      {
-        "label" : "Producto",
-        "value" : "Movil Samsung",
-        "order":1
-      },
-      {
-        "label" : "Importe",
-        "value" : "1500",
-        "order":2
-      }      
-    ];
-    OdigoApisCtrl.ReasonsOfConversation.reasonsOfConversation=['Prueba'];
+
+   
     OdigoApisCtrl.ReasonsOfConversation.conversationNumber=OdigoApisCtrl.OdigoCallInfo.CallRef.substring(23, 24);
     OdigoApisCtrl.ReasonsOfConversation.sessionReference=OdigoApisCtrl.OdigoCallInfo.CallRef.substring(20, 22);    
     console.log(OdigoApisCtrl.ReasonsOfConversation);
@@ -195,14 +210,91 @@ function OdigoApisController($location,OdigoApisService,userUid,appUid,$scope, $
     promise.then(function (response) {          
         OdigoApisCtrl.OpStatus='200';
         console.log('Then:',response.data);          
-        console.log('<-- ReasonsOfConversation()');
+        console.log('<-- SetReasonsOfConversation()');
       })
       .catch(function (error) {
         console.log("Error:",error.status);
         OdigoApisCtrl.OpStatus=error.status;
-        console.log('<-- ReasonsOfConversation()');
+        console.log('<-- SetReasonsOfConversation()');
     });                
   };
+
+
+/////////////////////////////////////////////////////
+//           END SESSION OF CALL SETTING DATA     ///
+/////////////////////////////////////////////////////    
+  OdigoApisCtrl.EndSessionSettingData = function(Token,Agent){
+    console.log('--> EndSessionSettingData()');
+    console.log(Token,Agent);
+    console.log(OdigoApisCtrl);
+    OdigoApisCtrl.OpStatus='';
+
+   
+    OdigoApisCtrl.ReasonsOfConversation.conversationNumber=OdigoApisCtrl.OdigoCallInfo.CallRef.substring(23, 24);
+    OdigoApisCtrl.ReasonsOfConversation.sessionReference=OdigoApisCtrl.OdigoCallInfo.CallRef.substring(20, 22);    
+    console.log(OdigoApisCtrl.ReasonsOfConversation);
+
+
+    //First we hangup de call
+
+    OdigoApisCtrl.OpStatus='';
+      var promise= OdigoApisService.OdigoHangUp(Token,Agent);
+      promise.then(function (response) {
+          OdigoApisCtrl.OpStatus='200';
+          console.log('Then:',response.data);
+          //Set the codification
+          var promiseII= OdigoApisService.ReasonsOfConversation(Token,Agent,'DE01',OdigoApisCtrl.OdigoCallInfo.CallRef.substring(0, 20),OdigoApisCtrl.ReasonsOfConversation);
+          promiseII.then(function (response) {          
+              OdigoApisCtrl.OpStatus='200';
+              console.log('Then:',response.data);          
+              console.log('<-- EndSessionSettingData()');
+
+              //EndWrapUpTimeOut              
+              OdigoApisCtrl.OpStatus='';
+              OdigoApisCtrl.CallReasonCreate={};
+              OdigoApisCtrl.CallReasonCreate.agentId=OdigoApisCtrl.userUid;
+              OdigoApisCtrl.CallReasonCreate.callId=OdigoApisCtrl.OdigoCallInfo.CallRef;
+              OdigoApisCtrl.CallReasonCreate.gateId=OdigoApisCtrl.OdigoCallInfo.GateId;
+              OdigoApisCtrl.CallReasonCreate.keyboardDuration=0;
+              var reason={};
+              reason.key='Folder';
+              reason.value='Valor De Reason';
+              OdigoApisCtrl.CallReasonCreate.reasons=[reason];
+              OdigoApisCtrl.CallReasonCreate.storing=true;
+              OdigoApisCtrl.CallReasonCreate.wrapUpEnd=true;
+              var promiseIII= OdigoApisService.OdigoEndWrapUp(Token,Agent,OdigoApisCtrl.CallReasonCreate);
+              promiseIII.then(function (response) {
+                    OdigoApisCtrl.OpStatus='200';
+                    console.log('Then:',response.data);          
+                  })
+                  .catch(function (error) {
+                    console.log("Error:",error.status);
+                    OdigoApisCtrl.OpStatus=error.status;
+                });
+            })
+            .catch(function (error) {
+              console.log("Error:",error.status);
+              OdigoApisCtrl.OpStatus=error.status;
+              console.log('<-- EndSessionSettingData()');
+          });                
+
+
+        })
+        .catch(function (error) {
+          console.log("Error:",error.status);
+          OdigoApisCtrl.OpStatus=error.status;
+      });
+
+    //Set the codification
+
+
+
+    
+
+
+               
+  };
+
 
     //GET VOICE INTERACTIONS
   OdigoApisCtrl.GetVoiceInteraction = function(Token,Agent){
@@ -253,8 +345,7 @@ function OdigoApisController($location,OdigoApisService,userUid,appUid,$scope, $
   };
 
   //ANSWER
-  OdigoApisCtrl.OdigoAnswer = function(Token){
-    alert(Token);
+  OdigoApisCtrl.OdigoAnswer = function(Token){    
     OdigoApisCtrl.OpStatus='';
   };
 
