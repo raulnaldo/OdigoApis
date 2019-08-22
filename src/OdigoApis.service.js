@@ -143,6 +143,24 @@ function OdigoApisService($http, ApiPath,ApiAuthPath,CI360ApiPath,userUid,appUid
   };
 
 
+//Start Record Call
+//*****************************
+  service.OdigoStartRecord = function (Token,Agent) {
+    console.log('--> OdigoStartRecord()');
+    var response = $http({
+      method: "POST",
+      headers: {
+         'Content-Type': 'application/json',         
+         'X-API-TOKEN' : Token,
+         'X-WS-INSTANCE' : 'de01'
+       },              
+      url: (ApiPath + Agent.replace('@', '%40') + '/commands/startRecordCall')
+    });
+    console.log('<-- OdigoStartRecord()');
+    return response;
+  };
+
+
 //TRANSFER
 //*****************************
   service.OdigoTransfer = function (Token,Agent,TransferRequest) {
@@ -161,6 +179,7 @@ function OdigoApisService($http, ApiPath,ApiAuthPath,CI360ApiPath,userUid,appUid
     console.log('<-- OdigoTransfer()');
     return response;
   };
+
 
 
 //SWITCH

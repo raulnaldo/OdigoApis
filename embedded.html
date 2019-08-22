@@ -1,0 +1,199 @@
+﻿<!doctype html>
+<html>
+<head>
+    <!--Requires Jquery.min.js to be present in the same dir as page-->
+    <script type="text/javascript" src="lib/jquery-3.1.0.min.js"></script>
+    
+    <title>Synergy - Web Embedded</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="Pragma" content="no-cache">
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: 'Questrial',Verdana,Arial;
+            font-size: 16px;
+            font-weight: normal;
+            color: #000000;
+            padding-right: 5px;
+            line-height: normal;
+        }
+
+        iframe {
+            width: 800px;
+            height: 600px;
+        }
+
+        .script {
+            float: left;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body onload="LoadFrame()">
+                <div class="col-md-3" style="background-color:#e6e6e6;width:225px;">
+                                <br>
+                                <!--This is the base URL for the CallScripter instance-->
+                                <label>Base URL</label><input type="text" class="form-control" name="BaseURL" id="BaseURL" onchange="ValuesChanged()" value="http://localhost:7000"><Button  class="btn btn-success" onclick="LoadFrame()">Reset</button><br /><br />
+                                
+                                <!--Campaign name linked to CallScripter script to pop-->
+                                <label>Campaign</label><input type="text" name="Campaign" id="Campaign" value="Ipswich"  class="form-control" onchange="ValuesChanged()"><br />
+                                
+                                <!--Campaign reference used to source existing CallScripter record in campaign-->
+                                <label>Reference</label><input type="text" name="Reference" id="Reference" value="123" class="form-control" onchange="ValuesChanged()"><br />
+                                
+                                <!--DDI number linked to CallScripter script to pop-->
+                                <label>DDI</label><input type="text" name="DDI" id="DDI" value="1001"  class="form-control" onchange="ValuesChanged()"><br />
+                                
+                                <!--Connector name to be utilised in the script-->
+                                <label>Connector Id</label><input type="text" name="Connector" id="Connector" value=""  class="form-control" onchange="ValuesChanged()"><br />
+
+                                <!--JSON dictionary of linked field name and value to populate the script-->
+                                <label>Data</label><textarea name="Data" id="Data" rows="10" cols="30"  class="form-control" onchange="ValuesChanged()">{"Forename":"John","Surname":"Smith","Town":"Ipswich","Age":"30"}</textarea><br />
+                                <br />
+                                <div class="ButtonPanel" align="center">
+                                                <button class="btn btn-success" onclick="APIPopDDI()" style="width:100%;">API DDI</button>
+                                                <button class="btn btn-success" onclick="APIPopCampaign()" style="width:100%;">API Campaign</button>
+                                                <br /><br />
+                                                <button class="btn btn-success" onclick="URLPopDDI()" style="width:100%;">URL DDI</button>
+                                                <button class="btn btn-success" onclick="URLPopCampaign()" style="width:100%;">URL Campaign</button>
+                                                <br /><br />
+                                                <button class="btn btn-success" onclick="PostPopDDI()" style="width:100%;">Post DDI</button>
+                                                <button class="btn btn-success" onclick="PostPopCampaign()" style="width:100%;">Post Campaign</button>
+                                                <br><br>
+                                </div>
+
+                                <!--Outcome to leave when using desktop api to close or abandon the script-->
+                                <label>Call Outcome</label><input type="text" name="outcome" id="outcome" value="Transferred"  class="form-control" onchange="ValuesChanged()">
+                                <div class="ButtonPanel" align="center">
+                                    <button class="btn btn-success" onclick="AbandonScript()" style="width:100%;">Abandon Script</button>
+                                    <button class="btn btn-success" onclick="CloseScript()" style="width:100%;">Close Script</button> 
+                                </div>
+                </div>    
+    <div class="col-md-8" style="width:600px;">
+        <iframe name="myFrame" id="myFrame"></iframe>
+    </div>
+    <script language="javascript">
+        <!--
+        var URL = '';
+        var Campaign = '';
+        var Reference = '';
+        var connector = '';
+        var DDI = '';
+        var Data = '';
+        var DataObj;
+        var postData = '';
+        var outcome = '';
+
+        function LoadFrame() {
+            URL = document.getElementById('BaseURL').value;
+            Campaign = document.getElementById('Campaign').value;
+            Reference = document.getElementById('Reference').value;
+            connector = document.getElementById('Connector').value;
+            DDI = document.getElementById('DDI').value;
+            Data = document.getElementById('Data').value;
+            outcome = document.getElementById('outcome').value;
+            DataObj = eval('(' + Data + ')');
+            ConstructPostData();
+            if (URL != '')
+                document.getElementById('myFrame').src = URL + '/executer/desktop.aspx';
+        }
+
+        function ValuesChanged() {
+            URL = document.getElementById('BaseURL').value;
+            Campaign = document.getElementById('Campaign').value;
+            Reference = document.getElementById('Reference').value;
+            connector = document.getElementById('Connector').value;
+            DDI = document.getElementById('DDI').value;
+            Data = document.getElementById('Data').value;
+            outcome = document.getElementById('outcome').value;
+            DataObj = eval('(' + Data + ')');
+            ConstructPostData();
+        }
+
+        //Script linked data supplied by GET/POST methods must supply a list of popName and popValue to the script executer
+        function ConstructPostData() {
+            postData = '';
+            var popCount = 0;
+            for (var d in DataObj) {
+                popCount += 1;
+                postData += '&popName' + popCount;
+                postData += '=' + d;
+                postData += '&popValue' + popCount;
+                postData += '=' + DataObj[d];
+            }
+            postData = 'popCount=' + popCount + postData;
+        }
+
+        //Method for popping script via DDI number using the desktop API. Data is passed as a dictionary object.
+        //Web page must be on desktop.aspx for API to be exposed
+        function APIPopDDI() {
+            if (document.getElementById('myFrame').contentWindow &&
+                document.getElementById('myFrame').contentWindow.Desktop) {
+                document.getElementById('myFrame').contentWindow.Desktop.Pop(DDI, Reference, DataObj, connector);
+            } else {
+                LoadFrame();
+            }
+        }
+
+        //Method for popping script via Campaign name using the desktop API. Data is passed as a dictionary object.
+        //Web page must be on desktop.aspx for API to be exposed
+        function APIPopCampaign() {
+            if (document.getElementById('myFrame').contentWindow &&
+                document.getElementById('myFrame').contentWindow.Desktop){
+                document.getElementById('myFrame').contentWindow.Desktop.Pop.CampaignByName(Campaign, Reference, DataObj, connector);
+            } else {
+                LoadFrame();
+            }
+        }
+
+        //Method for popping script via DDI number and supplying linked data on the URL
+        function URLPopDDI() {
+            document.getElementById('myFrame').src = URL + '/executer/script.aspx?function=start&var_DDI=' + DDI + '&diallerReference= ' + Reference + '&connectorId=' + connector + '&restartScript=true&' + postData;
+        }
+
+        //Method for popping script via Campaign name and supplying linked data on the URL
+        function URLPopCampaign() {
+            document.getElementById('myFrame').src = URL + '/executer/script.aspx?function=start&diallerCampaign=' + Campaign + '&diallerReference=' + Reference + '&connectorId=' + connector + '&restartScript=true&' + postData;
+        }
+
+        //Method for popping script via DDI number and posting linked data to the script
+        function PostPopDDI() {
+            var csUrl = URL + '/executer/script.aspx?function=start&var_DDI=' + DDI + '&diallerReference= ' + Reference + '&connectorId=' + connector + '&restartScript=true';
+            postToIframe(csUrl);
+        }
+
+        //Method for popping script via Campaign Name and posting linked data to the script
+        function PostPopCampaign() {
+            var csUrl = URL + '/executer/script.aspx?function=start&diallerCampaign=' + Campaign + '&diallerReference=' + Reference + '&connectorId=' + connector + '&restartScript=true';
+            postToIframe(csUrl);
+        }
+
+        function postToIframe(url) {
+            $('body').append('<form id="scriptPopForm" method="post" action="' + url + '" target="myFrame"></form>');
+            var f = $('#scriptPopForm');
+            var pc = 0;
+            $.each(DataObj, function(n, v) {
+                pc++;
+                f.append('<input type="hidden" name="popName' + pc + '" id="popName' + pc + '" />');
+                f.append('<input type="hidden" name="popValue' + pc + '" id="popValue' + pc + '" />');
+                $('#popName' + pc).val(n);
+                $('#popValue' + pc).val(v);
+            });
+            f.append('<input type="hidden" name="popCount" value="' + pc + '" />');
+            f.submit();
+            f.remove();
+        }
+
+        function AbandonScript() {
+            document.getElementById('myFrame').contentWindow.Desktop.FinishScript(outcome, true);
+        }
+
+        function CloseScript() {
+            document.getElementById('myFrame').contentWindow.Desktop.FinishScript(outcome, false);
+        }
+        // -->
+    </script>
+    </body>
+</html>

@@ -121,6 +121,21 @@ OdigoApisCtrl.ReasonsOfConversation.reasonsOfConversation=['Texto libre'];
       });                
   };    
 
+  //OdigoStartRecord  
+  OdigoApisCtrl.OdigoStartRecord = function(Token,Agent){
+    OdigoApisCtrl.OpStatus='';
+      var promise= OdigoApisService.OdigoStartRecord(Token,Agent);
+      promise.then(function (response) {
+          OdigoApisCtrl.OpStatus='200';
+          console.log('Then:',response.data);          
+        })
+        .catch(function (error) {
+          console.log("Error:",error.status);
+          OdigoApisCtrl.OpStatus=error.status;
+      });                
+  };    
+  
+
   //END WRAPUP
   OdigoApisCtrl.OdigoEndWrapUp = function(Token,Agent){
     OdigoApisCtrl.OpStatus='';
