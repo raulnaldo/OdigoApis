@@ -113,7 +113,61 @@ try{
   console.log(' <--> CustomerSelected:',vOdigoCustomer);  
   if (typeof(vOdigoCustomer) != 'undefined' && vOdigoCustomer != null) {
     console.log(' --> BuildingDataFromCustomer:');  
-    vDATA= vOdigoCustomer.firstName + '|' + vOdigoCustomer.lastName + '|' + vOdigoCustomer.id + '|' + vOdigoCustomer.addresses[0].street1 + '|' + vOdigoCustomer.addresses[0].city + '|' + vOdigoCustomer.addresses[0].country + '|' + vOdigoCustomer.birthday + '|27-08-2019|IBAN5575464661163546';
+    vDATA="";
+    try{
+      vDATA= vDATA + vOdigoCustomer.firstName + '|';
+    }
+    catch(error){
+      vDATA= vDATA + '|';
+    }
+    try{
+      vDATA= vDATA +  vOdigoCustomer.lastName + '|';
+    }
+    catch(error){
+      vDATA= vDATA + '|';
+    }
+    try{
+      vDATA= vDATA +  vOdigoCustomer.id + '|';
+    }
+    catch(error){
+      vDATA= vDATA + '|';
+    }
+    try{
+      vDATA= vDATA +  vOdigoCustomer.addresses[0].street1 + '|';
+    }
+    catch(error){
+      vDATA= vDATA + '|';
+    }
+    try{
+      vDATA= vDATA +  vOdigoCustomer.addresses[0].city + '|';
+    }
+    catch(error){
+      vDATA= vDATA + '|';
+    }
+    try{
+      vDATA= vDATA +  vOdigoCustomer.addresses[0].country + '|';
+    }
+    catch(error){
+      vDATA= vDATA + '|';
+    }
+    try{
+      vDATA= vDATA +  vOdigoCustomer.birthday + '|';
+    }
+    catch(error){
+      vDATA= vDATA + '|';
+    }
+    try{
+      vDATA= vDATA +  '|27-08-2019|';
+    }
+    catch(error){
+      vDATA= vDATA + '|';
+    }
+    try{
+      vDATA= vDATA +  'IBAN5575464661163546';
+    }
+    catch(error){
+      vDATA= vDATA;
+    }
     console.log(' --> BuildingDataFromCustomer:',vDATA);  
     console.log(' <-- BuildingDataFromCustomer:');      
   }
@@ -142,12 +196,12 @@ try{
   console.log(' -->BUILD URL()'); 
   //var URL = 'https://capgemini.callscripter.com/executer/script.aspx?function=start&diallerCampaign=Santander World Elite Mastercard&csUsername=Odigo&csPassword=OdigoV5&restartScript=true&var_Phone='+vPHONE+'&var_OdigoData='+vDATA+'&var_CallRef='+vCALLREF+'&var_AgentName='+vAGENTNAME+'&var_AgentLastName='+vAGENLAST+'&var_Login='+vLOGIN+'&var_Gate='+vGATE;
 
-  var URL = 'https://capgemini.callscripter.com/executer/script.aspx?function=start&runFromEditor=true&script=160&restartScript=true&var_Phone='+vPHONE+'&var_OdigoData='+vDATA+'&var_CallRef='+vCALLREF+'&var_AgentName='+vAGENTNAME+'&var_AgentLastName='+vAGENLAST+'&var_Login='+vLOGIN+'&var_Gate='+vGATE;
+  var URL = 'https://capgemini.callscripter.com/executer/script.aspx?function=start&runFromEditor=true&script=163&restartScript=true&var_Phone='+vPHONE+'&var_OdigoData='+vDATA+'&var_CallRef='+vCALLREF+'&var_AgentName='+vAGENTNAME+'&var_AgentLastName='+vAGENLAST+'&var_Login='+vLOGIN+'&var_Gate='+vGATE;
   console.log(' <--BUILD URL()['+ URL +']');  
 
-  console.log(' -->SET LOAD FRAME EMPTY()'); 
-  category.loadIframe('');
-  console.log(' <--SET LOAD FRAME EMPTY()'); 
+//  console.log(' -->SET LOAD FRAME EMPTY()'); 
+//  category.loadIframe('');
+//  console.log(' <--SET LOAD FRAME EMPTY()'); 
 
   console.log(' --> LOAD FRAME()'); 
   category.loadIframe(URL);

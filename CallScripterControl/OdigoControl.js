@@ -64,7 +64,7 @@ function ExecCommand_[attr]Control ID[/attr]_[attr]Version[/attr](fieldId, btn, 
                 headers: {
                     'X-API-TOKEN': document.theForm.var_token.value,
                     'Content-Type':'application/json',
-                    'X-WS-INSTANCE':'de01'
+                    'X-WS-INSTANCE':'routing_osp01'
                 },
                 data: JSON.stringify({
                 "agentId":document.theForm.var_Login.value,
@@ -83,7 +83,7 @@ function ExecCommand_[attr]Control ID[/attr]_[attr]Version[/attr](fieldId, btn, 
                 error: function(XMLHttpRequest, textStatus, errorThrown) {  
                     console.log('error: '+textStatus);  
                 }  
-              });            
+            });            
         }
         else{
             if (Command=='stopRecordCall'){
@@ -93,7 +93,7 @@ function ExecCommand_[attr]Control ID[/attr]_[attr]Version[/attr](fieldId, btn, 
                     headers: {
                         'X-API-TOKEN': document.theForm.var_token.value,
                         'Content-Type':'application/json',
-                        'X-WS-INSTANCE':'de01'
+                        'X-WS-INSTANCE':'routing_osp01'
                     },
                     data: JSON.stringify(
                         {
@@ -108,25 +108,83 @@ function ExecCommand_[attr]Control ID[/attr]_[attr]Version[/attr](fieldId, btn, 
                     error: function(XMLHttpRequest, textStatus, errorThrown) {  
                         console.log('error: '+textStatus);  
                     }  
-                  });                 
+                });                 
             }
             else{
-                $.ajax({            
-                    //url: BaseURL + '/agent/v1/agents/'+encodeURIComponent(AgentName)+'/commands/'+Command,
-                    url: BaseURL + '/agent/v1/agents/'+encodeURIComponent(document.theForm.var_Login.value)+'/commands/'+Command,
-                    headers: {
-                        'X-API-TOKEN': document.theForm.var_token.value,
-                        'Content-Type':'application/json',
-                        'X-WS-INSTANCE':'de01'
-                    },
-                    method: 'POST',
-                    success: function(data){
-                      console.log('succes: '+data);
-                    },
-                    error: function(XMLHttpRequest, textStatus, errorThrown) {  
-                        console.log('error: '+textStatus);  
-                    }  
-                  });
+                if (Command=='reasonsOfConversation'){
+                    var pageData = Script.Utils.GetAllFieldsAndVariables();
+                    console.log('pageData:',pageData);
+                    console.log('pageData.CallRef:',pageData.var_CallRef);
+                    if (!(Script.Utils.isNullOrWhiteSpace(pageData.var_CallRef))){
+                        var ReasonsOfConversation={};
+                        ReasonsOfConversation.freeReasonsOfConversation={};
+                        ReasonsOfConversation.freeReasonsOfConversation=[];
+                        var Reason={};
+                        if (!(Script.Utils.isNullOrWhiteSpace(pageData.var_RefusedCredit))){                        
+                            Reason={
+                                "label" : "Credito Rechazado",
+                                "value" : pageData.var_RefusedCredit,
+                                "order" : (ReasonsOfConversation.freeReasonsOfConversation.length+1)
+                             };
+                             ReasonsOfConversation.freeReasonsOfConversation[ReasonsOfConversation.freeReasonsOfConversation.length]=Reason;
+                        }
+                        if (!(Script.Utils.isNullOrWhiteSpace(pageData.var_CreditCards))){
+                            Reason={
+                                "label" : "Numero de Tarjetas",
+                                "value" : pageData.var_CreditCards,
+                                "order" : (ReasonsOfConversation.freeReasonsOfConversation.length+1)
+                             };
+                             ReasonsOfConversation.freeReasonsOfConversation[ReasonsOfConversation.freeReasonsOfConversation.length]=Reason;
+                        }                        
+                        if (!(Script.Utils.isNullOrWhiteSpace(pageData.var_Incomings))){                        
+                            Reason={
+                                "label" : "Ingresos superiores 30K",
+                                "value" : pageData.var_Incomings,
+                                "order" : (ReasonsOfConversation.freeReasonsOfConversation.length+1)
+                             };
+                             ReasonsOfConversation.freeReasonsOfConversation[ReasonsOfConversation.freeReasonsOfConversation.length]=Reason;
+                        }                        
+                        ReasonsOfConversation.reasonsOfConversation=[document.theForm.var_CallComments.value];                        
+                        ReasonsOfConversation.conversationNumber=document.theForm.var_CallRef.value.substring(23, 24);
+                        ReasonsOfConversation.sessionReference=document.theForm.var_CallRef.value.substring(20, 22);                                   
+                                
+                        $.ajax({                        
+                            url: BaseURL + '/ci360/v3/OSP01/voice-interactions/'+document.theForm.var_CallRef.value.substring(0, 20)+'/reasonsOfConversation',
+                            headers: {
+                            'X-API-TOKEN': document.theForm.var_token.value,
+                            'Content-Type':'application/json',
+                            'X-WS-INSTANCE':'routing_osp01'
+                            },
+                            data: JSON.stringify(ReasonsOfConversation),
+                            dataType: "application/json",
+                            method: 'POST',
+                            success: function(data){
+                              console.log('succes: '+data);
+                            },
+                            error: function(XMLHttpRequest, textStatus, errorThrown) {  
+                            console.log('error: '+textStatus);  
+                            }  
+                        });                        
+                    }
+                }
+                else{
+                    $.ajax({            
+                        //url: BaseURL + '/agent/v1/agents/'+encodeURIComponent(AgentName)+'/commands/'+Command,
+                        url: BaseURL + '/agent/v1/agents/'+encodeURIComponent(document.theForm.var_Login.value)+'/commands/'+Command,
+                        headers: {
+                            'X-API-TOKEN': document.theForm.var_token.value,
+                            'Content-Type':'application/json',
+                            'X-WS-INSTANCE':'routing_osp01'
+                        },
+                        method: 'POST',
+                        success: function(data){
+                          console.log('succes: '+data);
+                        },
+                        error: function(XMLHttpRequest, textStatus, errorThrown) {  
+                            console.log('error: '+textStatus);  
+                        }  
+                    });
+                }
           }
         }
     
