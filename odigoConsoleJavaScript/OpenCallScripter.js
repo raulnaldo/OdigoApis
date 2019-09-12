@@ -40,7 +40,7 @@ catch(error) {
 try{
   console.log(' --> odigo.getHideFolder()');
   var vDATA = odigo.getHideFolder();  
-  vDATA='RAUL|ORTEGA|1262|MarCantabrico23|Paracuellos de Jarama|Madrid|01-11-1975|27-08-2019|IBAN00356548461575';
+  //vDATA='RAUL|ORTEGA|1262|MarCantabrico23|Paracuellos de Jarama|Madrid|01-11-1975|27-08-2019|IBAN00356548461575';
   console.log(' <-- odigo.getHideFolder():',vDATA);
 }
 catch(error) {

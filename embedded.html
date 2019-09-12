@@ -35,22 +35,22 @@
                 <div class="col-md-3" style="background-color:#e6e6e6;width:225px;">
                                 <br>
                                 <!--This is the base URL for the CallScripter instance-->
-                                <label>Base URL</label><input type="text" class="form-control" name="BaseURL" id="BaseURL" onchange="ValuesChanged()" value="http://localhost:7000"><Button  class="btn btn-success" onclick="LoadFrame()">Reset</button><br /><br />
+                                <label>Base URL</label><input type="text" class="form-control" name="BaseURL" id="BaseURL" onchange="ValuesChanged()" value="https://capgemini.callscripter.com"><Button  class="btn btn-success" onclick="LoadFrame()">Reset</button><br /><br />
                                 
                                 <!--Campaign name linked to CallScripter script to pop-->
-                                <label>Campaign</label><input type="text" name="Campaign" id="Campaign" value="Ipswich"  class="form-control" onchange="ValuesChanged()"><br />
+                                <label>Campaign</label><input type="text" name="Campaign" id="Campaign" value="Santander World Elite Mastercard"  class="form-control" onchange="ValuesChanged()"><br />
                                 
                                 <!--Campaign reference used to source existing CallScripter record in campaign-->
-                                <label>Reference</label><input type="text" name="Reference" id="Reference" value="123" class="form-control" onchange="ValuesChanged()"><br />
+                                <label>Reference</label><input type="text" name="Reference" id="Reference" value="" class="form-control" onchange="ValuesChanged()"><br />
                                 
                                 <!--DDI number linked to CallScripter script to pop-->
-                                <label>DDI</label><input type="text" name="DDI" id="DDI" value="1001"  class="form-control" onchange="ValuesChanged()"><br />
+                                <label>DDI</label><input type="text" name="DDI" id="DDI" value=""  class="form-control" onchange="ValuesChanged()"><br />
                                 
                                 <!--Connector name to be utilised in the script-->
                                 <label>Connector Id</label><input type="text" name="Connector" id="Connector" value=""  class="form-control" onchange="ValuesChanged()"><br />
 
                                 <!--JSON dictionary of linked field name and value to populate the script-->
-                                <label>Data</label><textarea name="Data" id="Data" rows="10" cols="30"  class="form-control" onchange="ValuesChanged()">{"Forename":"John","Surname":"Smith","Town":"Ipswich","Age":"30"}</textarea><br />
+                                <label>Data</label><textarea name="Data" id="Data" rows="10" cols="30"  class="form-control" onchange="ValuesChanged()">{"FirstName":"Raul","LastName":"Ortega","ID Number":"1234"}</textarea><br />
                                 <br />
                                 <div class="ButtonPanel" align="center">
                                                 <button class="btn btn-success" onclick="APIPopDDI()" style="width:100%;">API DDI</button>
